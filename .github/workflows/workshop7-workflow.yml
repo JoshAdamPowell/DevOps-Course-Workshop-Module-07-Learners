@@ -2,16 +2,30 @@ on: [push]                      # Will make the workflow run every time you push
 
 jobs:
   build:
-    name: Build and test
+    name: Build and test C# package
     runs-on: ubuntu-latest      # Sets the build environment a machine with the latest Ubuntu installed
     steps:
+
     - uses: actions/checkout@v2 # Adds a step to checkout the repository code
     - uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x' # SDK Version to use; x will use the latest version of the 3.1 channel
-    - run: cd DotnetTemplate.Web
+
     - run: dotnet build
     - run: dotnet test
     - uses: actions/setup-node@v3
-    - run: npm install
-    - run: npm test
+    - name: Typescript install
+      run: npm ci
+      working-directory: ./DotnetTemplate.Web
+
+    - name: Typescript build
+      run: npm run build
+      working-directory: ./DotnetTemplate.Web
+
+    - name: Typescript linting
+      run: npm run lint
+      working-directory: ./DotnetTemplate.Web
+
+    - name: Typescript test
+      run: npm run test
+      working-directory: ./DotnetTemplate.Web
