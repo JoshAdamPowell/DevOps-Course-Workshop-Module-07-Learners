@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2 # Adds a step to checkout the repository code
     - name: Install latest .NET SDK
-        uses: Elskom/setup-latest-dotnet@main
+      uses: Elskom/setup-latest-dotnet@main
 
     - name: Restore, Build, test, and pack
       uses: Elskom/build-dotnet@main
